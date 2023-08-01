@@ -382,6 +382,7 @@ bool MQTTClient::connect(const char clientID[], const char username[], const cha
 bool MQTTClient::publish(const char topic[], const char payload[], int length, bool retained, int qos) {
   // return immediately if not connected
   if (!this->connected()) {
+    this->_lastError = LWMQTT_NOT_CONNECTED;
     return false;
   }
 
@@ -425,6 +426,7 @@ void MQTTClient::prepareDuplicate(uint16_t packetID) {
 bool MQTTClient::subscribe(const char topic[], int qos) {
   // return immediately if not connected
   if (!this->connected()) {
+    this->_lastError = LWMQTT_NOT_CONNECTED;
     return false;
   }
 
@@ -443,6 +445,7 @@ bool MQTTClient::subscribe(const char topic[], int qos) {
 bool MQTTClient::unsubscribe(const char topic[]) {
   // return immediately if not connected
   if (!this->connected()) {
+    this->_lastError = LWMQTT_NOT_CONNECTED;
     return false;
   }
 
