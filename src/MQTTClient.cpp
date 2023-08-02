@@ -314,6 +314,8 @@ void MQTTClient::setCleanSession(bool _cleanSession) { this->cleanSession = _cle
 
 void MQTTClient::setTimeout(int _timeout) { this->timeout = _timeout; }
 
+void MQTTClient::setConnectTimeout(int _connect_timeout) { this->connect_timeout = _connect_timeout; }
+
 void MQTTClient::dropOverflow(bool enabled) {
   // configure drop overflow
   lwmqtt_drop_overflow(&this->client, enabled, &this->_droppedMessages);
@@ -357,7 +359,7 @@ bool MQTTClient::connect(const char clientID[], const char username[], const cha
   }
 
   // connect to broker
-  this->_lastError = lwmqtt_connect(&this->client, &options, this->will, this->timeout);
+  this->_lastError = lwmqtt_connect(&this->client, &options, this->will, this->connect_timeout);
 
   // copy return code
   this->_returnCode = options.return_code;

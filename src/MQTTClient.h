@@ -95,6 +95,7 @@ class MQTTClient {
 
  public:
   void *ref = nullptr;
+  uint32_t connect_timeout = 1000;
 
   explicit MQTTClient(int bufSize = 128) : MQTTClient(bufSize, bufSize) {}
   MQTTClient(int readSize, int writeBufSize);
@@ -135,10 +136,12 @@ class MQTTClient {
   void setKeepAlive(int keepAlive);
   void setCleanSession(bool cleanSession);
   void setTimeout(int timeout);
-  void setOptions(int _keepAlive, bool _cleanSession, int _timeout) {
+  void setConnectTimeout(int connectTimeout);
+  void setOptions(int _keepAlive, bool _cleanSession, int _timeout, int _connect_timeout) {
     this->setKeepAlive(_keepAlive);
     this->setCleanSession(_cleanSession);
     this->setTimeout(_timeout);
+    this->setConnectTimeout(_connect_timeout);
   }
 
   void dropOverflow(bool enabled);
