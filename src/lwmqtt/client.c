@@ -398,11 +398,13 @@ static lwmqtt_err_t lwmqtt_cycle_until(lwmqtt_client_t *client, lwmqtt_packet_ty
 
 lwmqtt_err_t lwmqtt_connect(lwmqtt_client_t *client, lwmqtt_connect_options_t *options, lwmqtt_will_t *will,
                             uint32_t timeout) {
+#if 0
   // ensure default options
   static lwmqtt_connect_options_t def_options = lwmqtt_default_connect_options;
   if (options == NULL) {
     options = &def_options;
   }
+#endif // 0
 
   // set command timer
   client->timer_set(client->command_timer, timeout);
@@ -459,11 +461,13 @@ lwmqtt_err_t lwmqtt_connect(lwmqtt_client_t *client, lwmqtt_connect_options_t *o
 
 lwmqtt_err_t lwmqtt_publish(lwmqtt_client_t *client, lwmqtt_publish_options_t *options, lwmqtt_string_t topic,
                             lwmqtt_message_t msg, uint32_t timeout) {
+#if 0
   // ensure default options
   static lwmqtt_publish_options_t def_options = lwmqtt_default_publish_options;
   if (options == NULL) {
     options = &def_options;
   }
+#endif // 0
 
   // set command timer
   client->timer_set(client->command_timer, timeout);

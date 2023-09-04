@@ -316,10 +316,12 @@ void MQTTClient::setTimeout(int _timeout) { this->timeout = _timeout; }
 
 void MQTTClient::setConnectTimeout(int _connect_timeout) { this->connect_timeout = _connect_timeout; }
 
+#if 0
 void MQTTClient::dropOverflow(bool enabled) {
   // configure drop overflow
   lwmqtt_drop_overflow(&this->client, enabled, &this->_droppedMessages);
 }
+#endif // 0
 
 bool MQTTClient::connect(const char clientID[], const char username[], const char password[], bool skip) {
   // close left open connection if still connected
@@ -362,7 +364,7 @@ bool MQTTClient::connect(const char clientID[], const char username[], const cha
   this->_lastError = lwmqtt_connect(&this->client, &options, this->will, this->connect_timeout);
 
   // copy return code
-  this->_returnCode = options.return_code;
+  // this->_returnCode = options.return_code;
 
   // handle error
   if (this->_lastError != LWMQTT_SUCCESS) {
@@ -373,7 +375,7 @@ bool MQTTClient::connect(const char clientID[], const char username[], const cha
   }
 
   // copy session present flag
-  this->_sessionPresent = options.session_present;
+  // this->_sessionPresent = options.session_present;
 
   // set flag
   this->_connected = true;
@@ -398,10 +400,12 @@ bool MQTTClient::publish(const char topic[], const char payload[], int length, b
   // prepare options
   lwmqtt_publish_options_t options = lwmqtt_default_publish_options;
 
+#if 0
   // set duplicate packet id if available
   if (this->nextDupPacketID > 0) {
     options.dup_id = &this->nextDupPacketID;
   }
+#endif // 0
 
   // publish message
   this->_lastError = lwmqtt_publish(&this->client, &options, lwmqtt_string(topic), message, this->timeout);
@@ -415,6 +419,7 @@ bool MQTTClient::publish(const char topic[], const char payload[], int length, b
   return true;
 }
 
+#if 0
 uint16_t MQTTClient::lastPacketID() {
   // get last packet id from client
   return this->client.last_packet_id;
@@ -424,6 +429,7 @@ void MQTTClient::prepareDuplicate(uint16_t packetID) {
   // set next duplicate packet id
   this->nextDupPacketID = packetID;
 }
+#endif // 0
 
 bool MQTTClient::subscribe(const char topic[], int qos) {
   // return immediately if not connected
